@@ -1,0 +1,32 @@
+# Environment — contains secrets, NEVER commit this
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# Database — local only
+instance/
+*.db
+*.sqlite
+*.sqlite3
+
+# Uploads — user data, store in cloud in production
+backend/uploads/images/
+backend/uploads/reports/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini

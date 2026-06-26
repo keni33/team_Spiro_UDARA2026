@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StructGuard AI — Construction Safety Platform</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏗️</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- LOGIN PAGE                                                    -->
+<!-- ============================================================ -->
+<section id="page-login" class="page auth-page">
+  <div class="auth-card">
+
+    <div class="auth-logo">
+      <span style="font-size:38px">&#x1F3D7;&#xFE0F;</span>
+      <div>
+        <div class="auth-brand">StructGuard AI</div>
+        <div class="auth-tagline">Construction Safety Platform</div>
+      </div>
+    </div>
+
+    <h2 class="auth-title">Welcome back</h2>
+    <div id="login-error" class="alert alert-error" style="display:none"></div>
+
+    <!-- Google Sign-In -->
+    <button class="btn-google" onclick="authForms.googleLogin()">
+      <svg width="18" height="18" viewBox="0 0 48 48" style="flex-shrink:0">
+        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+      </svg>
+      Continue with Google
+    </button>
+
+    <div class="auth-divider">or sign in with email</div>
+
+    <div class="form-group">
+      <label class="form-label" for="login-email">Email Address</label>
+      <input class="form-input" type="email" id="login-email"
+             placeholder="you@example.com" autocomplete="email">
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="login-password">Password</label>
+      <input class="form-input" type="password" id="login-password"
+             placeholder="Enter your password" autocomplete="current-password">
+    </div>
+
+    <button class="btn btn-primary btn-full" id="login-btn" onclick="authForms.login()">
+      Sign In
+    </button>
+
+    <p class="auth-switch">
+      Don't have an account?
+      <a href="#" onclick="router.navigate('register'); return false;">Create one here</a>
+    </p>
+
+    <!-- Hidden dev helper — no visible UI, fillDemo() still works in console -->
+    <div id="demo-box" style="display:none" aria-hidden="true"></div>
+
+  </div>
+</section>
+
+<!-- REGISTER PAGE                                                 -->
+<!-- ============================================================ -->
+<section id="page-register" class="page auth-page">
+  <div class="auth-card" style="max-width:520px">
+
+    <div class="auth-logo">
+      <span style="font-size:38px">🏗️</span>
+      <div>
+        <div class="auth-brand">StructGuard AI</div>
+        <div class="auth-tagline">Construction Safety Platform</div>
+      </div>
+    </div>
+
+    <h2 class="auth-title">Create your account</h2>
+    <div id="register-error"   class="alert alert-error"   style="display:none"></div>
+    <div id="register-success" class="alert alert-success" style="display:none"></div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" for="reg-name">Full Name *</label>
+        <input class="form-input" type="text" id="reg-name" placeholder="Emeka Okafor">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="reg-email">Email Address *</label>
+        <input class="form-input" type="email" id="reg-email" placeholder="emeka@example.com">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="reg-role">Role *</label>
+      <select class="form-input" id="reg-role">
+        <option value="">— Select your role —</option>
+        <option value="supervisor">Site Supervisor / Foreman</option>
+        <option value="developer">Developer / Building Owner</option>
+        <option value="inspector">Regulatory Inspector</option>
+        <option value="agency_admin">Agency Administrator</option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" for="reg-phone">Phone</label>
+        <input class="form-input" type="tel" id="reg-phone" placeholder="+234 801 234 5678">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="reg-state">State</label>
+        <select class="form-input" id="reg-state">
+          <option value="Lagos">Lagos</option>
+          <option value="Abuja">Abuja (FCT)</option>
+          <option value="Rivers">Rivers</option>
+          <option value="Kano">Kano</option>
+          <option value="Oyo">Oyo</option>
+          <option value="Enugu">Enugu</option>
+          <option value="Anambra">Anambra</option>
+          <option value="Delta">Delta</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="reg-org">Organisation / Company</label>
+      <input class="form-input" type="text" id="reg-org" placeholder="e.g. Nwosu Properties Ltd">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" for="reg-password">Password *</label>
+        <input class="form-input" type="password" id="reg-password" placeholder="Min 8 chars, 1 number">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="reg-confirm">Confirm Password *</label>
+        <input class="form-input" type="password" id="reg-confirm" placeholder="Repeat password">
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-full" onclick="authForms.register()">
+      Create Account
+    </button>
+    <p class="auth-switch" style="margin-top:16px">
+      Already have an account?
+      <a href="#" onclick="router.navigate('login'); return false;">Sign in</a>
+    </p>
+
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- APP SHELL — visible after login                              -->
+<!-- ============================================================ -->
+<div id="app-shell" style="display:none" class="app-shell">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span style="font-size:26px">🏗️</span>
+      <div>
+        <div class="sidebar-logo-text">StructGuard AI</div>
+        <div class="sidebar-logo-sub">Safety Platform</div>
+      </div>
+      <button class="sidebar-close-btn" onclick="ui.toggleSidebar()" aria-label="Close menu">✕</button>
+    </div>
+
+    <div class="sidebar-user" id="sidebar-user">
+      <div class="sidebar-avatar" id="sidebar-avatar">?</div>
+      <div>
+        <div class="sidebar-user-name" id="sidebar-user-name">Loading...</div>
+        <div class="sidebar-user-role" id="sidebar-user-role">—</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav" id="sidebar-nav" aria-label="Main navigation"></nav>
+
+    <div class="sidebar-footer">
+      <button class="theme-toggle" onclick="ui.toggleTheme()">
+        <span id="theme-icon">🌙</span>
+        <span id="theme-label">Dark Mode</span>
+      </button>
+      <button class="btn-logout" onclick="auth.logout()">Sign Out</button>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="ui.toggleSidebar()"></div>
+
+  <!-- MAIN AREA -->
+  <div class="main-wrap">
+
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="topbar-hamburger" onclick="ui.toggleSidebar()" aria-label="Open menu">☰</button>
+        <h1 class="topbar-title" id="topbar-title">Dashboard</h1>
+      </div>
+      <div class="topbar-right">
+        <span class="topbar-role-badge" id="topbar-role-badge"></span>
+        <button class="topbar-icon-btn" onclick="ui.toggleTheme()"
+                id="topbar-theme-btn" title="Toggle theme" aria-label="Toggle theme">🌙</button>
+        <div class="topbar-avatar" id="topbar-avatar"
+             onclick="router.navigate('profile')" title="My Profile" role="button" tabindex="0"></div>
+      </div>
+    </header>
+
+    <main class="content" id="main-content">
+
+      <section id="page-dashboard" class="page">
+        <div id="dashboard-content" class="page-inner">
+          <div class="loading-state"><div class="spinner"></div><span>Loading dashboard...</span></div>
+        </div>
+      </section>
+
+      <section id="page-projects" class="page">
+        <div id="projects-content" class="page-inner">
+          <div class="loading-state"><div class="spinner"></div><span>Loading projects...</span></div>
+        </div>
+      </section>
+
+      <section id="page-new-project" class="page">
+        <div class="page-inner">
+          <div class="section-header">
+            <div>
+              <div class="section-title">🏗️ Register New Project</div>
+              <div class="section-sub">Add a new construction site to StructGuard AI</div>
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="router.navigate('projects')">← Back</button>
+          </div>
+          <div class="card" style="max-width:700px">
+            <div class="card-body">
+              <div id="new-project-error" class="alert alert-error" style="display:none"></div>
+
+              <div class="form-section-label">Site Information</div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="np-name">Project Name *</label>
+                  <input class="form-input" type="text" id="np-name"
+                         placeholder="e.g. Surulere 4-Storey Residential">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="np-type">Building Type *</label>
+                  <select class="form-input" id="np-type">
+                    <option value="residential">Residential</option>
+                    <option value="commercial">Commercial</option>
+                    <option value="industrial">Industrial</option>
+                    <option value="mixed">Mixed Use</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="np-address">Site Address *</label>
+                <input class="form-input" type="text" id="np-address"
+                       placeholder="e.g. 12 Benson Street, Surulere, Lagos">
+              </div>
+
+              <div class="form-row form-row-3">
+                <div class="form-group">
+                  <label class="form-label" for="np-state">State</label>
+                  <select class="form-input" id="np-state">
+                    <option value="Lagos">Lagos</option>
+                    <option value="Abuja">Abuja (FCT)</option>
+                    <option value="Rivers">Rivers</option>
+                    <option value="Kano">Kano</option>
+                    <option value="Oyo">Oyo</option>
+                    <option value="Enugu">Enugu</option>
+                    <option value="Anambra">Anambra</option>
+                    <option value="Delta">Delta</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="np-lga">LGA</label>
+                  <input class="form-input" type="text" id="np-lga" placeholder="e.g. Surulere">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="np-floors">Floors *</label>
+                  <input class="form-input" type="number" id="np-floors" value="1" min="1" max="50">
+                </div>
+              </div>
+
+              <div class="form-section-label">Permit &amp; Compliance</div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="np-permit">LASBCA Permit Reference</label>
+                  <input class="form-input" type="text" id="np-permit"
+                         placeholder="e.g. LASBCA/2026/00423">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="np-desc">Description</label>
+                  <input class="form-input" type="text" id="np-desc"
+                         placeholder="Brief project description">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="np-start">Start Date</label>
+                  <input class="form-input" type="date" id="np-start">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="np-end">Expected Completion</label>
+                  <input class="form-input" type="date" id="np-end">
+                </div>
+              </div>
+
+              <div class="form-section-label">GPS Location (Optional)</div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="np-lat">Latitude</label>
+                  <input class="form-input" type="text" id="np-lat" placeholder="e.g. 6.5244">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="np-lng">Longitude</label>
+                  <input class="form-input" type="text" id="np-lng" placeholder="e.g. 3.3792">
+                </div>
+              </div>
+              <button class="btn btn-ghost btn-sm" style="margin-bottom:20px"
+                      onclick="projectForms.getGPS()">📍 Auto-detect My Location</button>
+
+              <div style="display:flex;gap:12px">
+                <button class="btn btn-primary" onclick="projectForms.create()">Register Project</button>
+                <button class="btn btn-ghost" onclick="router.navigate('projects')">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="page-submit" class="page">
+        <div id="submit-content" class="page-inner">
+          <div class="loading-state"><div class="spinner"></div><span>Loading...</span></div>
+        </div>
+      </section>
+
+      <section id="page-result" class="page">
+        <div id="result-content" class="page-inner"></div>
+      </section>
+
+      <section id="page-inspect" class="page">
+        <div id="inspect-content" class="page-inner">
+          <div class="loading-state"><div class="spinner"></div><span>Loading queue...</span></div>
+        </div>
+      </section>
+
+      <section id="page-analytics" class="page">
+        <div id="analytics-content" class="page-inner">
+          <div class="loading-state"><div class="spinner"></div><span>Loading analytics...</span></div>
+        </div>
+      </section>
+
+      <section id="page-users" class="page">
+        <div id="users-content" class="page-inner">
+          <div class="loading-state"><div class="spinner"></div><span>Loading users...</span></div>
+        </div>
+      </section>
+
+      <section id="page-profile" class="page">
+        <div id="profile-content" class="page-inner">
+          <div class="loading-state"><div class="spinner"></div><span>Loading profile...</span></div>
+        </div>
+      </section>
+
+    </main>
+  </div><!-- /main-wrap -->
+</div><!-- /app-shell -->
+
+<div id="toast-container" class="toast-container"></div>
+
+<script src="js/app.js"></script>
+<script src="js/pages.js"></script>
+
+<script>
+"use strict";
+
+/* ============================================================
+   AUTH FORMS
+   Teaching note: These handle login and register submissions.
+   They call the backend API, get a JWT back, store it, then
+   navigate to the dashboard. The backend decides what role the
+   user has — the frontend just reads and displays it.
+============================================================ */
+const authForms = {
+
+  /* Called by demo buttons — fills the form fields only.
+     Password comes from memory (set by boot), not from HTML. */
+  fillDemo(email) {
+    document.getElementById("login-email").value    = email;
+    document.getElementById("login-password").value = window.__DEV_PW || "";
+    document.getElementById("login-btn").focus();
+  },
+
+  async googleLogin() {
+    /* Step 1: Ask our backend for the Google authorisation URL */
+    const res = await api.get("/auth/google");
+    if (!res.ok) {
+      const el = document.getElementById("login-error");
+      el.textContent   = res.data?.error || "Google sign-in is not configured yet.";
+      el.style.display = "flex";
+      return;
+    }
+    /* Step 2: Redirect to Google — user picks their account there */
+    window.location.href = res.data.url;
+  },
+
+  async login() {
+    const btn     = document.getElementById("login-btn");
+    const errorEl = document.getElementById("login-error");
+    const email   = document.getElementById("login-email").value.trim();
+    const pass    = document.getElementById("login-password").value;
+
+    errorEl.style.display = "none";
+
+    if (!email || !pass) {
+      errorEl.textContent   = "Please enter your email and password.";
+      errorEl.style.display = "flex";
+      return;
+    }
+
+    btn.disabled    = true;
+    btn.textContent = "Signing in…";
+
+    const res = await api.post("/auth/login", { email, password: pass });
+
+    btn.disabled    = false;
+    btn.textContent = "Sign In";
+
+    if (res.ok) {
+      /* Save tokens to localStorage, build the shell UI, go to dashboard */
+      auth.save(res.data.access_token, res.data.refresh_token, res.data.user);
+      ui.initShell(res.data.user);
+      router.navigate("dashboard");
+    } else {
+      errorEl.textContent   = res.data?.error || "Login failed. Please check your credentials.";
+      errorEl.style.display = "flex";
+    }
+  },
+
+  googleLogin() {
+    /* Redirect to backend which redirects to Google.
+       After Google login, backend redirects back to index.html#oauth=... */
+    window.location.href = "http://localhost:5000/api/auth/google";
+  },
+
+  /* Handle Google OAuth callback — reads token from URL fragment */
+  async handleOAuthCallback() {
+    const hash = window.location.hash;
+    if (!hash.startsWith("#oauth=")) return false;
+    try {
+      const encoded = hash.slice(7);  // remove "#oauth="
+      const decoded = JSON.parse(atob(encoded.replace(/-/g,"+").replace(/_/g,"/")));
+      if (decoded.access_token) {
+        auth.save(decoded.access_token, decoded.refresh_token, decoded.user);
+        ui.initShell(decoded.user);
+        window.location.hash = "";  // clean URL
+        router.navigate("dashboard");
+        return true;
+      }
+    } catch(e) { console.error("OAuth callback error", e); }
+    return false;
+  },
+
+  async register() {
+    const errorEl   = document.getElementById("register-error");
+    const successEl = document.getElementById("register-success");
+    errorEl.style.display = successEl.style.display = "none";
+
+    const name    = document.getElementById("reg-name").value.trim();
+    const email   = document.getElementById("reg-email").value.trim();
+    const role    = document.getElementById("reg-role").value;
+    const phone   = document.getElementById("reg-phone").value.trim();
+    const state   = document.getElementById("reg-state").value;
+    const org     = document.getElementById("reg-org").value.trim();
+    const pass    = document.getElementById("reg-password").value;
+    const confirm = document.getElementById("reg-confirm").value;
+
+    if (!name || !email || !role || !pass) {
+      errorEl.textContent   = "Please fill in all required fields (marked with *).";
+      errorEl.style.display = "flex";
+      return;
+    }
+    if (pass !== confirm) {
+      errorEl.textContent   = "Passwords do not match.";
+      errorEl.style.display = "flex";
+      return;
+    }
+
+    const res = await api.post("/auth/register", {
+      name, email, role, phone, state, organisation: org, password: pass
+    });
+
+    if (res.ok) {
+      auth.save(res.data.access_token, res.data.refresh_token, res.data.user);
+      ui.initShell(res.data.user);
+      router.navigate("dashboard");
+    } else {
+      errorEl.textContent   = res.data?.error || "Registration failed. Please try again.";
+      errorEl.style.display = "flex";
+    }
+  }
+};
+
+/* ============================================================
+   PROJECT FORMS
+============================================================ */
+const projectForms = {
+  async create() {
+    const errorEl = document.getElementById("new-project-error");
+    errorEl.style.display = "none";
+
+    const name    = document.getElementById("np-name").value.trim();
+    const address = document.getElementById("np-address").value.trim();
+    const type    = document.getElementById("np-type").value;
+    const floors  = parseInt(document.getElementById("np-floors").value, 10);
+
+    if (!name || !address || !type) {
+      errorEl.textContent   = "Project name, address, and building type are required.";
+      errorEl.style.display = "flex";
+      return;
+    }
+
+    const res = await api.post("/projects", {
+      name, address,
+      building_type: type, floors,
+      state:        document.getElementById("np-state").value,
+      lga:          document.getElementById("np-lga").value.trim(),
+      permit_ref:   document.getElementById("np-permit").value.trim(),
+      description:  document.getElementById("np-desc").value.trim(),
+      start_date:   document.getElementById("np-start").value || null,
+      expected_end: document.getElementById("np-end").value   || null,
+      latitude:     document.getElementById("np-lat").value.trim() || null,
+      longitude:    document.getElementById("np-lng").value.trim() || null,
+    });
+
+    if (res.ok) {
+      toast.success(`✅ Project "${res.data.project.sgid}" registered!`);
+      router.navigate("projects");
+    } else {
+      errorEl.textContent   = res.data?.error || "Failed to register project.";
+      errorEl.style.display = "flex";
+    }
+  },
+
+  getGPS() {
+    if (!navigator.geolocation) { toast.warning("Geolocation not supported."); return; }
+    toast.info("📍 Getting your location…");
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        document.getElementById("np-lat").value = pos.coords.latitude.toFixed(6);
+        document.getElementById("np-lng").value = pos.coords.longitude.toFixed(6);
+        toast.success("Location captured!");
+      },
+      () => toast.error("Could not get location. Enter manually.")
+    );
+  }
+};
+
+/* ============================================================
+   UI HELPERS
+   Teaching note: ui.initShell() is called once after login.
+   It populates the sidebar with the user's name/role and
+   builds the nav links based on what their role allows.
+   The backend already decided the role — we just display it.
+============================================================ */
+const ui = {
+  toggleTheme() {
+    const html     = document.documentElement;
+    const isDark   = html.getAttribute("data-theme") === "dark";
+    const next     = isDark ? "light" : "dark";
+    html.setAttribute("data-theme", next);
+    localStorage.setItem("sg_theme", next);
+    const icon  = next === "dark" ? "☀️" : "🌙";
+    const label = next === "dark" ? "Light Mode" : "Dark Mode";
+    ["theme-icon","topbar-theme-btn"].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = icon;
+    });
+    const lbl = document.getElementById("theme-label");
+    if (lbl) lbl.textContent = label;
+  },
+
+  toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("sidebar-overlay");
+    const open    = sidebar.classList.toggle("sidebar-open");
+    overlay.style.display = open ? "block" : "none";
+    document.body.style.overflow = open ? "hidden" : "";
+  },
+
+  initShell(user) {
+    /* Show the app shell, hide all auth pages */
+    document.getElementById("app-shell").style.display = "flex";
+    document.querySelectorAll(".auth-page").forEach(p => {
+      p.style.display = "none";
+    });
+
+    /* Fill in user details in sidebar and topbar */
+    const initials = (user.name || "?").split(" ").map(w => w[0]).join("").slice(0,2).toUpperCase();
+    const els = {
+      "sidebar-avatar":    initials,
+      "sidebar-user-name": user.name,
+      "sidebar-user-role": roles.label(user.role),
+      "topbar-avatar":     initials,
+    };
+    Object.entries(els).forEach(([id, val]) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = val;
+    });
+
+    /* Role badge colour per role — purely cosmetic */
+    const badge   = document.getElementById("topbar-role-badge");
+    const colours = {
+      supervisor:  ["#dbeafe","#1d4ed8"],
+      developer:   ["#ede9fe","#6d28d9"],
+      inspector:   ["#fef3c7","#92400e"],
+      agency_admin:["#fce7f3","#9d174d"],
+    };
+    const [bg, fg] = colours[user.role] || ["#f1f5f9","#475569"];
+    if (badge) {
+      badge.style.background = bg;
+      badge.style.color      = fg;
+      badge.textContent      = roles.label(user.role);
+    }
+
+    /* Build nav items appropriate for this role */
+    this.buildNav(user);
+
+    /* Restore saved theme */
+    const saved  = localStorage.getItem("sg_theme") || "light";
+    document.documentElement.setAttribute("data-theme", saved);
+    const isDark = saved === "dark";
+    const icon   = isDark ? "☀️" : "🌙";
+    ["theme-icon","topbar-theme-btn"].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = icon;
+    });
+    const lbl = document.getElementById("theme-label");
+    if (lbl) lbl.textContent = isDark ? "Light Mode" : "Dark Mode";
+  },
+
+  buildNav(user) {
+    const nav = document.getElementById("sidebar-nav");
+    if (!nav) return;
+    nav.innerHTML = roles.navItems(user).map(item => `
+      <button class="nav-item" data-page="${item.id}"
+              onclick="router.navigate('${item.id}')"
+              aria-label="${item.label}">
+        <span class="nav-icon">${item.icon}</span>
+        <span class="nav-label">${item.label}</span>
+      </button>
+    `).join("");
+  }
+};
+
+/* ============================================================
+   BOOT SCRIPT
+   Runs immediately when the page loads.
+   1. Restore theme
+   2. Show demo box only on localhost (never in production)
+   3. If a saved JWT token exists, try to restore the session
+   4. Otherwise show the login page
+============================================================ */
+(async function boot() {
+  /* ── Step 0: Handle Google OAuth redirect ──
+     If Google redirected back here with #oauth=..., handle it first */
+  if (await authForms.handleOAuthCallback()) return;
+
+  /* ── Step 1: Restore theme (no flash of wrong colour) ── */
+  const saved = localStorage.getItem("sg_theme") || "light";
+  document.documentElement.setAttribute("data-theme", saved);
+
+  /* ── Step 2: IMMEDIATELY hide all pages and show login ──
+     This runs synchronously before ANY fetch call.
+     It means even if the fetch below fails (e.g. no internet),
+     the user still sees a clean login screen, not a jumble of pages. */
+  document.querySelectorAll(".page").forEach(p => p.style.display = "none");
+  router.show("login");   // ← always show login first, fast and synchronous
+
+  /* ── Step 2b: Handle Google OAuth errors in URL ── */
+  const _urlP = new URLSearchParams(window.location.search);
+  const _oErr = _urlP.get("error");
+  if (_oErr) {
+    const _msgs = {
+      google_not_configured: "Google Sign-In is not configured yet. Please use email/password.",
+      google_denied:         "Google sign-in was cancelled.",
+      google_failed:         "Google sign-in failed. Please try again or use email/password.",
+      account_deactivated:   "Your account has been deactivated. Contact your admin.",
+    };
+    const errEl = document.getElementById("login-error");
+    if (errEl) { errEl.textContent = _msgs[_oErr] || "Sign-in error. Please try again."; errEl.style.display = "flex"; }
+    window.history.replaceState({}, "", window.location.pathname);
+  }
+
+  /* ── Step 3: Store dev password in memory on localhost only ──
+     No demo UI shown — credentials only available via browser console
+     for developer testing: authForms.fillDemo('admin@demo.com') */
+  const onLocalhost = ["localhost","127.0.0.1","0.0.0.0",""].includes(location.hostname);
+  if (onLocalhost) {
+    window.__DEV_PW = atob("RGVtbzEyMzQh"); // "Demo1234!" — in memory only
+  }
+
+  /* ── Step 4: If a saved token exists, try to restore the session ──
+     This is async — it happens after login is already showing.
+     If it succeeds, the user is taken straight to dashboard (no login needed).
+     If it fails, they stay on the login screen. */
+  if (auth.isLoggedIn()) {
+    const res = await api.get("/auth/me");
+    if (res.ok) {
+      const user = res.data.user;
+      auth.save(auth.getToken(), localStorage.getItem(CONFIG.REFRESH_KEY), user);
+      ui.initShell(user);
+      router.navigate("dashboard");
+    } else {
+      /* Token expired — clear storage, stay on login */
+      auth.clearSession();
+    }
+  }
+})();
+</script>
+
+</body>
+</html>
