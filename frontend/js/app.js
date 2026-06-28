@@ -18,7 +18,7 @@
 /* CONFIGURATION                                                        */
 /* ================================================================== */
 const CONFIG = {
-  API_BASE:   "http://localhost:5000/api",
+  API_BASE:   "https://structguard-api.onrender.com/api",
   TOKEN_KEY:  "sg_access_token",
   REFRESH_KEY:"sg_refresh_token",
   USER_KEY:   "sg_user",
